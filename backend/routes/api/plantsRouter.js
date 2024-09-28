@@ -13,4 +13,20 @@ router.get("/plants", async (req, res) => {
     }
 });
 
+
+router.get("/plants/:id", async (req, res) => {
+    const plantId = req.params.id;
+    try {
+        const plant = await Plant.findByPk(plantId);
+
+        if (!plant) {
+            return res.status(404).json({ message: `Plant ${plantId} not found `});
+        }
+        res.json(plant);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+})
+
 module.exports = router;
