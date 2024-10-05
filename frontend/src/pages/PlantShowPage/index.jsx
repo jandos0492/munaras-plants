@@ -3,27 +3,17 @@ import { useParams } from "react-router-dom";
 import NavBar from "../../shared-components/NavBar";
 import LoadingSpinner from "../../shared-components/LoadingSpinner";
 import PlantInfoSection from "./PlantInfoSection";
+import * as plantService from "../../services/plant";
 
 const PlantShowPage = () => {
     const [plant, setPlant] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const { plantId } = useParams();
 
-    // useEffect(() => {
-    //     (async () => {
-    //         setIsLoading(true);
-    //         const response = await plantService.getPlantById({ id: plantId });
-    //         setPlant(await response.json());
-    //         setIsLoading(false);
-    //     })();
-    // }, [plantId]);
-
     useEffect(() => {
         (async () => {
             setIsLoading(true);
-            const response = await fetch(
-                `/api/plants/${plantId}`
-            );
+            const response = await plantService.getPlantById({ id: plantId });
             setPlant(await response.json());
             setIsLoading(false);
         })();

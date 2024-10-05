@@ -10,7 +10,6 @@ const SignInPage = () => {
     const [error, setError] = useState("");
     const location = useLocation();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     return (
         <RedirectToPlantsIfSignedIn>
@@ -38,7 +37,6 @@ const SignInPage = () => {
                             await dispatch(
                                 sessionActions.login({ username: values.username, password: values.password })
                             );
-                            navigate("/plants");
                         } catch (res) {
                             const data = await res.json();
                             if (data && data.errors) setError(data.errors[0]);

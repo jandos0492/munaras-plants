@@ -70,36 +70,15 @@ const PlantPurchaseOptions = ({ plant, imageIdx, setImageIdx }) => {
                 <button
                     onClick={async () => {
                         setIsLoading(true);
-                        // const response = await cartService.addPlantToCart({
-                        //     plantId: plant.id,
-                        //     quantity,
-                        //     potColor: plant.images[imageIdx].pot_color,
-                        // });
-                        const response = await fetch(
-                            `/api/cart/plants/${plant.id}`,
-                            {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "XSRF-TOKEN": document.cookie
-                                        .split("; ")
-                                        .find((row) =>
-                                            row.startsWith("XSRF-TOKEN=")
-                                        )
-                                        .split("=")[1],
-                                },
-                                credentials: "include",
-                                body: JSON.stringify({
-                                    image_src: plant.images[imageIdx].src,
-                                    plant_name: plant.name,
-                                    pot_color: plant.images[imageIdx].pot_color,
-                                    price_per_unit: plant.price,
-                                    quantity: quantity
-                                })
-                            }
-                        );
+                        await cartService.addPlantToCart({
+                            plantId: plant.id,
+                            quantity,
+                            potColor: plant.images[imageIdx].pot_color,
+                            imageSrc: plant.images[imageIdx].src,
+                            plantName: plant.name,
+                            pricePerUnit: plant.price,
+                        });
                         setIsLoading(false);
-                        console.log(response.status);
                     }}
                     className="rounded-full bg-emerald-700 text-white text-xl flex-1 flex justify-center items-center hover:bg-emerald-800"
                 >

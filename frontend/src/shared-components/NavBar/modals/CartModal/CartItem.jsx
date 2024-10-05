@@ -1,8 +1,6 @@
 import * as cartService from "../../../../services/cart";
 
 const CartItem = ({ item, fetchCart }) => {
-    console.log(item);
-
     return (
         <div className="flex">
             <img className="w-28 rounded-md" src={item.image_src} alt="" />
@@ -26,22 +24,9 @@ const CartItem = ({ item, fetchCart }) => {
                     </div>
                     <button
                         onClick={async () => {
-                            await fetch(
-                                `/api/cart/${item.id}`,
-                                {
-                                    method: "DELETE",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        "XSRF-TOKEN": document.cookie
-                                            .split("; ")
-                                            .find((row) =>
-                                                row.startsWith("XSRF-TOKEN=")
-                                            )
-                                            .split("=")[1],
-                                    },
-                                    credentials: "include",
-                                }
-                            );
+                            await cartService.removeItemFromCart({
+                                itemId: item.id,
+                            });
                             fetchCart();
                         }}
                         className=" text-sm flex items-center text-slate-400 hover:text-red-800"

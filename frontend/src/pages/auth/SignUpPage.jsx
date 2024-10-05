@@ -7,7 +7,7 @@ import FormContainer from "./AuthForm/FormContainer";
 import RedirectToPlantsIfSignedIn from "../../shared-components/RedirectToPlantsIfSignedIn";
 
 const SignUpPage = () => {
-    const [error, setError] = useState("");
+    const [error, setError] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

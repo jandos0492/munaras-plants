@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import NavBar from "../../shared-components/NavBar";
 import PlantItem from "./PlantItem";
 import LoadingSpinner from "../../shared-components/LoadingSpinner";
+import * as plantService from "../../services/plant";
 
 const PlantListPage = () => {
     const [plants, setPlants] = useState([]);
@@ -11,22 +12,12 @@ const PlantListPage = () => {
     useEffect(() => {
         (async () => {
             setIsLoading(true);
-            const response = await fetch(`/api/plants`);
+            const response = await plantService.getPlants();
             const data = await response.json();
             setPlants(data);
             setIsLoading(false);
         })();
-    }, []);
-
-    // useEffect(() => {
-    //     (async () => {
-    //         setIsLoading(true);
-    //         const response = await plantService.getPlants();
-    //         const data = await response.json();
-    //         setPlants(data);
-    //         setIsLoading(false);
-    //     })();
-    // }, []);
+    }, [])
 
     return (
         <>
