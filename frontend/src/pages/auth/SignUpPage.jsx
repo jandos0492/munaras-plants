@@ -17,7 +17,7 @@ const SignUpPage = () => {
             return;
         }
 
-        if (values.password.length < 6) { // Минимальная длина 6 символов, как указано в бэкенде
+        if (values.password.length < 6) {
             setError("Password too short");
             return;
         }
@@ -35,17 +35,15 @@ const SignUpPage = () => {
                 })
             );
 
-            if (response.ok) { // Используем response.ok вместо status
+            if (response.ok) {
                 setError("");
                 navigate("/", {
                     state: { accountCreated: true },
                 });
-            } else {
-                const data = await response.json();
-                setError(data.errors?.[0] || "Signup failed");
             }
-        } catch (err) {
-            setError("An error occurred during registration.");
+        } catch (res) {
+            const data = await res.json();
+            if (data && data.errors) setError(data.errors[0]);
         }
     };
 

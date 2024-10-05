@@ -18,7 +18,7 @@ const FormContainer = ({ children }) => {
                         alt="capstone_logo_dark"
                     />
                     <div className=" font-playfair text-emerald-700 text-3xl">
-                        MJ's Plants
+                        Munara's Plants
                     </div>
                 </div>
                 {children}

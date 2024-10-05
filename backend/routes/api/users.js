@@ -55,7 +55,7 @@ router.post(
 
             if (registeredUserWithUsername) {
                 return res.status(401).json({
-                    errors: ["This username is already registered with Jaka's Plants. Please Choose another one."]
+                    errors: ["This username is already registered with Munara's Plants. Please Choose another one."]
                 })
             }
 

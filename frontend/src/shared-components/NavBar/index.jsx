@@ -34,7 +34,7 @@ const NavBar = () => {
                                     src="https://static-task-assets.react-formula.com/capstone_logo_light.png"
                                     alt="capstone_logo_light"
                                 />
-                                MJ's Plants
+                                Munara's Plants
                             </div>
                         </Link>
                         <div className="hidden sm:flex flex-1 flex justify-end">
