@@ -11,18 +11,10 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 const validateSignup = [
-    check("email")
-        .exists({ checkFalsy: true })
-        .isEmail()
-        .withMessage("Please provide a valid email."),
     check("username")
         .exists({ checkFalsy: true })
         .isLength({ min: 4 })
         .withMessage("Please provide a username with at least 4 characters."),
-    check("username")
-        .not()
-        .isEmail()
-        .withMessage("Username cannot be an email."),
     check("password")
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
@@ -31,11 +23,6 @@ const validateSignup = [
             // Custom validation function to check for spaces
             if (/\s/.test(value)) {
                 throw new Error("Password must not contain spaces.");
-            }
-
-            // Custom validation function to check for at least one uppercase letter
-            if (!/[A-Z]/.test(value)) {
-                throw new Error("Password must contain at least one uppercase letter.");
             }
 
             return true;
@@ -48,10 +35,10 @@ router.post(
     "",
     validateSignup,
     asyncHandler(async (req, res, next) => {
-        const { email, password, username } = req.body;
+        const { password, username } = req.body;
 
         try {
-            const user = await User.signup({ email, username, password });
+            const user = await User.signup({ username, password });
 
             await setTokenCookie(res, user);
 
@@ -59,16 +46,6 @@ router.post(
                 user,
             });
         } catch (err) {
-            const registeredUserWithEmail = await User.findOne({
-                where: {
-                    email
-                }
-            });
-            if (registeredUserWithEmail) {
-                return res.status(401).json({
-                    errors: ["This email is already registered with NYC Permit Hub."]
-                });
-            }
 
             const registeredUserWithUsername = await User.findOne({
                 where: {
@@ -78,7 +55,7 @@ router.post(
 
             if (registeredUserWithUsername) {
                 return res.status(401).json({
-                    errors: ["This username is already registered with NYC Permit Hub. Please Choose another one."]
+                    errors: ["This username is already registered with Jaka's Plants. Please Choose another one."]
                 })
             }
 

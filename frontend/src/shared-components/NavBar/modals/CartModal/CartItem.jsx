@@ -1,4 +1,4 @@
-import * as cartService from "services/cart";
+import * as cartService from "../../../../services/cart";
 
 const CartItem = ({ item, fetchCart }) => {
     console.log(item);

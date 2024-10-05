@@ -1,13 +1,137 @@
+// import { useState } from "react";
+// import { Link, useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+// import * as sessionActions from "../../store/session";
+// import AuthForm from "./AuthForm";
+// import FormContainer from "./AuthForm/FormContainer";
+// import * as userService from "services/user";
+// import RedirectToPlantsIfSignedIn from "shared-components/RedirectToPlantsIfSignedIn";
+
+// const SignUpPage = () => {
+//     const [error, setError] = useState("");
+//     const navigate = useNavigate();
+//     const dispatch = useDispatch();
+
+//     return (
+//         <RedirectToPlantsIfSignedIn>
+//             <FormContainer>
+//                 <div className="text-red-700 font-lato">{error}</div>
+//                 <AuthForm
+//                     fields={[
+//                         {
+//                             label: "username",
+//                             type: "text",
+//                         },
+//                         {
+//                             label: "password",
+//                             type: "password",
+//                         },
+//                         {
+//                             label: "confirm password",
+//                             type: "password",
+//                         },
+//                     ]}
+//                     submitButtonLabel="create account"
+//                     onSubmit={async (values) => {
+//                         if (values.username.length < 4) {
+//                             setError("username too short");
+//                             return;
+//                         }
+
+//                         if (values.password.length < 4) {
+//                             setError("password too short");
+//                             return;
+//                         }
+
+//                         if (values.password !== values["confirm password"]) {
+//                             setError("passwords do not match");
+//                             return;
+//                         }
+
+//                         // const response = await userService.createUser({
+//                         //     username: values.username,
+//                         //     password: values.password,
+//                         // });
+
+//                         const response = await dispatch(sessionActions.signup({
+//                             username: values.username,
+//                             password: values.password,
+//                         }));
+
+//                         if (response.status === 201) {
+//                             setError("");
+//                             navigate("/", {
+//                                 state: {
+//                                     accountCreated: true,
+//                                 },
+//                             });
+//                         } else {
+//                             const data = await response.json();
+//                             setError(data.error);
+//                         }
+//                     }}
+//                 />
+//                 <Link to="/" className="text-green-600 underline text-sm">
+//                     sign in
+//                 </Link>
+//             </FormContainer>
+//         </RedirectToPlantsIfSignedIn>
+//     );
+// };
+
+// export default SignUpPage;
+
+// src/pages/auth/SignUpPage.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import * as sessionActions from "../../store/session";
 import AuthForm from "./AuthForm";
 import FormContainer from "./AuthForm/FormContainer";
-import * as userService from "services/user";
-import RedirectToPlantsIfSignedIn from "shared-components/RedirectToPlantsIfSignedIn";
+import RedirectToPlantsIfSignedIn from "../../shared-components/RedirectToPlantsIfSignedIn";
 
 const SignUpPage = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleSubmit = async (values) => {
+        if (values.username.length < 4) {
+            setError("Username too short");
+            return;
+        }
+
+        if (values.password.length < 6) { // Минимальная длина 6 символов, как указано в бэкенде
+            setError("Password too short");
+            return;
+        }
+
+        if (values.password !== values["confirm password"]) {
+            setError("Passwords do not match");
+            return;
+        }
+
+        try {
+            const response = await dispatch(
+                sessionActions.signup({
+                    username: values.username,
+                    password: values.password,
+                })
+            );
+
+            if (response.ok) { // Используем response.ok вместо status
+                setError("");
+                navigate("/", {
+                    state: { accountCreated: true },
+                });
+            } else {
+                const data = await response.json();
+                setError(data.errors?.[0] || "Signup failed");
+            }
+        } catch (err) {
+            setError("An error occurred during registration.");
+        }
+    };
 
     return (
         <RedirectToPlantsIfSignedIn>
@@ -15,56 +139,15 @@ const SignUpPage = () => {
                 <div className="text-red-700 font-lato">{error}</div>
                 <AuthForm
                     fields={[
-                        {
-                            label: "username",
-                            type: "text",
-                        },
-                        {
-                            label: "password",
-                            type: "password",
-                        },
-                        {
-                            label: "confirm password",
-                            type: "password",
-                        },
+                        { label: "username", type: "text" },
+                        { label: "password", type: "password" },
+                        { label: "confirm password", type: "password" },
                     ]}
-                    submitButtonLabel="create account"
-                    onSubmit={async (values) => {
-                        if (values.username.length < 4) {
-                            setError("username too short");
-                            return;
-                        }
-
-                        if (values.password.length < 4) {
-                            setError("password too short");
-                            return;
-                        }
-
-                        if (values.password !== values["confirm password"]) {
-                            setError("passwords do not match");
-                            return;
-                        }
-
-                        const response = await userService.createUser({
-                            username: values.username,
-                            password: values.password,
-                        });
-
-                        if (response.status === 201) {
-                            setError("");
-                            navigate("/", {
-                                state: {
-                                    accountCreated: true,
-                                },
-                            });
-                        } else {
-                            const data = await response.json();
-                            setError(data.error);
-                        }
-                    }}
+                    submitButtonLabel="Create Account"
+                    onSubmit={handleSubmit}
                 />
                 <Link to="/" className="text-green-600 underline text-sm">
-                    sign in
+                    Sign In
                 </Link>
             </FormContainer>
         </RedirectToPlantsIfSignedIn>

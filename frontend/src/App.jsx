@@ -1,41 +1,36 @@
-import { useState } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import SignUpPage from "./pages/auth/SignUpPage";
 import SignInPage from "./pages/auth/SignInPage";
-import PlantListPage from "pages/PlantListPage";
-import PlantShowPage from "pages/PlantShowPage";
-import ScrollToTop from "shared-components/ScrollToTop";
-import * as userService from "services/user";
-import SessionContext from "contexts/sessionContext";
+import PlantListPage from "./pages/PlantListPage";
+import PlantShowPage from "./pages/PlantShowPage";
+import ScrollToTop from "./shared-components/ScrollToTop";
+import * as sessionActions from "./store/session";
 
 const App = () => {
-    const [sessionToken, setSessionToken] = useState(() =>
-        userService.getSessionTokenStorage()
-    );
+    const [isLoaded, setIsLoaded] = useState(false);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    }, [dispatch]);
 
     return (
-        <SessionContext.Provider value={{
-          username: sessionToken ? jwtDecode(sessionToken).username : null,
-          signIn: (token) => {
-            setSessionToken(token);
-            userService.setSessionTokenStorage(token);
-          },
-          signOut: () => {
-            setSessionToken(null);
-            userService.removeSessionTokenStorage();
-          }
-        }}>
-            <BrowserRouter>
-                <ScrollToTop />
+        <>
+            <ScrollToTop />
+            {isLoaded && (
                 <Routes>
                     <Route path="/" element={<SignInPage />} />
                     <Route path="/sign-up" element={<SignUpPage />} />
                     <Route path="/plants" element={<PlantListPage />} />
-                    <Route path="/plants/:plantId" element={<PlantShowPage />} />
+                    <Route
+                        path="/plants/:plantId"
+                        element={<PlantShowPage />}
+                    />
                 </Routes>
-            </BrowserRouter>
-        </SessionContext.Provider>
+            )}
+        </>
     );
 };
 

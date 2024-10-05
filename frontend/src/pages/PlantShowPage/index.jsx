@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NavBar from "shared-components/NavBar";
-import LoadingSpinner from "shared-components/LoadingSpinner";
-import * as plantService from "services/plant";
+import NavBar from "../../shared-components/NavBar";
+import LoadingSpinner from "../../shared-components/LoadingSpinner";
 import PlantInfoSection from "./PlantInfoSection";
 
 const PlantShowPage = () => {
@@ -10,10 +9,21 @@ const PlantShowPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const { plantId } = useParams();
 
+    // useEffect(() => {
+    //     (async () => {
+    //         setIsLoading(true);
+    //         const response = await plantService.getPlantById({ id: plantId });
+    //         setPlant(await response.json());
+    //         setIsLoading(false);
+    //     })();
+    // }, [plantId]);
+
     useEffect(() => {
         (async () => {
             setIsLoading(true);
-            const response = await plantService.getPlantById({ id: plantId });
+            const response = await fetch(
+                `http://localhost:3000/api/plants/${plantId}`
+            );
             setPlant(await response.json());
             setIsLoading(false);
         })();

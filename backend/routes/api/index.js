@@ -2,11 +2,9 @@ const router = require("express").Router();
 const sessionRouter = require("./session.js");
 const usersRouter = require("./users.js");
 
-const resetPasswordRouter = require("./reset-password.js");
 router.use("/session", sessionRouter);
 router.use("/users", usersRouter);
 
-router.use("/reset-password", resetPasswordRouter);
 
 // router.post("/test", function(req, res) {
 //     res.json({ requestBody: req.body });

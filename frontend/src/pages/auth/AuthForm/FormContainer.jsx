@@ -5,6 +5,7 @@ const FormContainer = ({ children }) => {
                 <img
                     className="h-screen object-cover"
                     src="https://static-task-assets.react-formula.com/capstone_sign_in_scene.png"
+                    alt="sign_in_scene"
                 />
                 <div className="absolute top-0 left-0 w-full h-full bg-black/10"></div>
                 <div className="absolute top-0 left-0 w-full h-full bg-green-800/40"></div>
@@ -14,9 +15,10 @@ const FormContainer = ({ children }) => {
                     <img
                         className="w-16 mb-2"
                         src="https://static-task-assets.react-formula.com/capstone_logo_dark.png"
+                        alt="capstone_logo_dark"
                     />
                     <div className=" font-playfair text-emerald-700 text-3xl">
-                        Rica's Plants
+                        MJ's Plants
                     </div>
                 </div>
                 {children}

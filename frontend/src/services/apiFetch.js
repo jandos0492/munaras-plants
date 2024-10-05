@@ -1,26 +1,32 @@
-import * as userService from "services/user";
-const { VITE_API_BASE_URL, VITE_API_KEY } = import.meta.env;
+// import * as userService from "./user";
 
-const apiFetch = (method, path, body = null) => {
-    const options = {
-        method,
-        credentials: "include",
-        headers: {
-            Authorization: "Bearer " + VITE_API_KEY,
-            "Content-Type": "application/json",
-        },
-    };
+// const xsrfToken = document.cookie
+//     .split("; ")
+//     .find((row) => row.startsWith("XSRF-TOKEN="))
+//     .split("=")[1];
 
-    const sessionToken = userService.getSessionTokenStorage();
-    if (sessionToken) {
-        options.headers["Capstone-Session"] = sessionToken;
-    }
+// console.log(xsrfToken);
 
-    if (body) {
-        options.body = JSON.stringify(body);
-    }
+// const apiFetch = (method, path, body = null) => {
+//     const options = {
+//         method,
+//         credentials: "include",
+//         headers: {
+//             "Content-Type": "application/json",
+//             "XSRF-TOKEN": xsrfToken
+//         },
+//     };
 
-    return fetch(VITE_API_BASE_URL + path, options);
-};
+//     // const sessionToken = userService.getSessionTokenStorage();
+//     // if (sessionToken) {
+//     //     options.headers["Capstone-Session"] = sessionToken;
+//     // }
 
-export default apiFetch;
+//     if (body) {
+//         options.body = JSON.stringify(body);
+//     }
+
+//     return fetch(path, options);
+// };
+
+// export default apiFetch; 

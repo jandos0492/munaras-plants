@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { RemoveScroll } from "react-remove-scroll";
-import SessionContext from "contexts/sessionContext";
-import LoadingSpinner from "shared-components/LoadingSpinner";
-import * as cartService from "services/cart";
+import SessionContext from "../../../../contexts/sessionContext";
+import LoadingSpinner from "../../../../shared-components/LoadingSpinner";
+import * as cartService from "../../../../services/cart";
 import CartItem from "./CartItem";
 import clsx from "clsx";
 

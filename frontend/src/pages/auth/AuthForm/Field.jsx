@@ -1,4 +1,5 @@
 const Field = ({ field, values, onChange }) => {
+    console.log(values)
     return (
         <div key={field.label} className="flex flex-col my-4">
             <label className="text-slate-500 pl-1" htmlFor={field.label}>
@@ -6,6 +7,7 @@ const Field = ({ field, values, onChange }) => {
             </label>
             <input
                 value={values[field.label]}
+                required
                 onChange={onChange}
                 id={field.label}
                 type={field.type}

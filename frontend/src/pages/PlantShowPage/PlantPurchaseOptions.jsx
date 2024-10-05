@@ -1,7 +1,7 @@
 import { useState } from "react";
 import clsx from "clsx";
-import { POT_COLORS } from "shared-components/util";
-import * as cartService from "services/cart";
+import { POT_COLORS } from "../../shared-components/util";
+import * as cartService from "../../services/cart";
 
 const PlantPurchaseOptions = ({ plant, imageIdx, setImageIdx }) => {
     const [quantity, setQuantity] = useState(1);

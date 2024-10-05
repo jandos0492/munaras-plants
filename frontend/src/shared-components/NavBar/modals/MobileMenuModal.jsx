@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { motion } from "framer-motion";
-import SessionContext from "contexts/sessionContext";
+import SessionContext from "../../../contexts/sessionContext";
 
 
 const MobileMenuModal = ({ onCartOpenClick }) => {

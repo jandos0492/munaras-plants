@@ -9,18 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: [4, 30],
-        isNotEmail(value) {
-          if (Validator.isEmail(value)) {
-            throw new Error("Cannot be an email.");
-          }
-        },
-      },
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [3, 256]
       },
     },
     hashedPassword: {
@@ -30,18 +18,15 @@ module.exports = (sequelize, DataTypes) => {
         len: [60, 60]
       }
     },
-    resetToken: {
-      type: DataTypes.STRING,
-    },
   }, {
     defaultScope: {
       attributes: {
-        exclude: ["hashedPassword", "email", "createdAt", "updatedAt", "resetToken"],
+        exclude: ["hashedPassword", "createdAt", "updatedAt",],
       },
     },
     scopes: {
       currentUser: {
-        attributes: { exclude: ["hashedPassword", "resetToken"] },
+        attributes: { exclude: ["hashedPassword"] },
       },
       loginUser: {
         attributes: {},
@@ -53,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
   // model file that will return an object with the User instance information
   // that is safe to save to a JWT. 
   User.prototype.toSafeObject = function () { // remember, this cannot be an arrow funciton
-    const { id, username, email } = this; // context will be the User instance
-    return { id, username, email };
+    const { id, username } = this; // context will be the User instance
+    return { id, username };
   };
 
   // Define an instance method, User.prototype.validatePassword in the user.js
@@ -77,18 +62,17 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   // Define a static method, User.login in the user.js model file that will
-  // accept an object with a credential and password key and find a User with a
-  // username or email with the specified credential using the loginUser scope.
+  // accept an object with a username and password key and find a User with a
+  // username or email with the specified username using the loginUser scope.
   // If a user is found, then validate the password by passing it into the
   // instance's .validatePassword method. If the password is valid, then
   // return the user with the currentUser scope.
-  User.login = async function ({ credential, password }) {
+  User.login = async function ({ username, password }) {
     const { Op } = require("sequelize");
     const user = await User.scope("loginUser").findOne({
       where: {
         [Op.or]: {
-          username: credential.toLowerCase(),
-          email: credential.toLowerCase(),
+          username: username.toLowerCase(),
         },
       },
     });
@@ -101,11 +85,10 @@ module.exports = (sequelize, DataTypes) => {
   // accept an object with a username, email and password key. Hash the password
   // using bcryptjs package's hashSync method. Create a User with the username,
   // email, and hashedPassword. Return the created user with the currentUser scope.
-  User.signup = async function ({ username, email, password }) {
+  User.signup = async function ({ username, password }) {
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({
       username: username.toLowerCase(),
-      email: email.toLowerCase(),
       hashedPassword,
     });
     return await User.scope("currentUser").findByPk(user.id);

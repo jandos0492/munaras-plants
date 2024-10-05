@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
-import { POT_COLORS, getRandomIdx } from "shared-components/util";
+import { POT_COLORS, getRandomIdx } from "../../shared-components/util";
 
 const PlantItem = ({ plant }) => {
     const [imageIdx, setImageIdx] = useState(() => getRandomIdx(plant.images));
@@ -12,6 +12,7 @@ const PlantItem = ({ plant }) => {
                 <img
                     className="w-[280px] h-[320px] rounded-md"
                     src={plant.images[imageIdx].src}
+                    alt="plant"
                 />
             </Link>
             <div className="flex justify-between my-3">

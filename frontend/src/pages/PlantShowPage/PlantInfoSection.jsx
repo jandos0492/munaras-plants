@@ -3,7 +3,7 @@ import Zoom from "react-medium-image-zoom";
 import PlantHeading from "./PlantHeading";
 import BenefitBox from "./BenefitBox";
 import PlantPurchaseOptions from "./PlantPurchaseOptions";
-import { getRandomIdx } from "shared-components/util";
+import { getRandomIdx } from "../../shared-components/util";
 import "react-medium-image-zoom/dist/styles.css";
 
 const PlantInfoSection = ({ plant }) => {

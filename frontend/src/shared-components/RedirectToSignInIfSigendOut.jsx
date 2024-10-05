@@ -1,16 +1,16 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SessionContext from "contexts/sessionContext";
+import { useSelector } from "react-redux";
 
 const RedirectToSignInIfSigendOut = ({ children }) => {
-    const { username } = useContext(SessionContext);
+    const username = useSelector((state) => state.session.user?.username);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!username) {
             navigate("/");
         }
-    }, [username]);
+    }, [username, navigate]);
 
     return children;
 };
