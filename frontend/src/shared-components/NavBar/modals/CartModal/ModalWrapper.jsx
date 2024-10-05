@@ -17,7 +17,7 @@ const ModalWrapper = ({ children, isOpen, onCloseClick }) => {
                         onCloseClick();
                     }
                 }}
-                className="fixed top-0 left-0 w-full h-full items-start bg-black/30 backdrop-blur-sm flex justify-end font-lato"
+                className="fixed top-0 left-0 w-full h-full items-start z-[100] bg-black/30 backdrop-blur-sm flex justify-end font-lato"
             >
                 <button
                     className="absolute top-0 right-0 p-2 text-4xl text-emerald-400"

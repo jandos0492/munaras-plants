@@ -22,7 +22,7 @@ const PlantShowPage = () => {
         (async () => {
             setIsLoading(true);
             const response = await fetch(
-                `http://localhost:3000/api/plants/${plantId}`
+                `/api/plants/${plantId}`
             );
             setPlant(await response.json());
             setIsLoading(false);

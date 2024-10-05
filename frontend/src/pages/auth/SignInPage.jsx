@@ -6,7 +6,6 @@ import AuthForm from "./AuthForm";
 import FormContainer from "./AuthForm/FormContainer";
 import RedirectToPlantsIfSignedIn from "../../shared-components/RedirectToPlantsIfSignedIn";
 import SessionContext from "../../contexts/sessionContext";
-import * as userService from "../../services/user";
 
 const SignInPage = () => {
     const [error, setError] = useState("");

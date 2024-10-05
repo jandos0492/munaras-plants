@@ -26,9 +26,22 @@ const CartItem = ({ item, fetchCart }) => {
                     </div>
                     <button
                         onClick={async () => {
-                            await cartService.removeItemFromCart({
-                                itemId: item.id,
-                            });
+                            await fetch(
+                                `/api/cart/${item.id}`,
+                                {
+                                    method: "DELETE",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "XSRF-TOKEN": document.cookie
+                                            .split("; ")
+                                            .find((row) =>
+                                                row.startsWith("XSRF-TOKEN=")
+                                            )
+                                            .split("=")[1],
+                                    },
+                                    credentials: "include",
+                                }
+                            );
                             fetchCart();
                         }}
                         className=" text-sm flex items-center text-slate-400 hover:text-red-800"

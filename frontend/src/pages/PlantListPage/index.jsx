@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import NavBar from "../../shared-components/NavBar";
 import PlantItem from "./PlantItem";
 import LoadingSpinner from "../../shared-components/LoadingSpinner";
-import RedirectToPlantsIfSignedIn from "../../shared-components/RedirectToPlantsIfSignedIn";
 
 const PlantListPage = () => {
     const [plants, setPlants] = useState([]);
@@ -12,7 +11,7 @@ const PlantListPage = () => {
     useEffect(() => {
         (async () => {
             setIsLoading(true);
-            const response = await fetch(`http://localhost:3000/api/plants`);
+            const response = await fetch(`/api/plants`);
             const data = await response.json();
             setPlants(data);
             setIsLoading(false);

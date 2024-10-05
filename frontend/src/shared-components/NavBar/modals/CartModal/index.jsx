@@ -15,7 +15,7 @@ const CartModal = ({ setCartOpen }) => {
 
     const fetchCart = useCallback(async () => {
         setIsLoading(true);
-        const response = await fetch("http://localhost:3000/api/cart");
+        const response = await fetch("/api/cart");
         setItems(await response.json());
         setIsLoading(false);
     }, []);
