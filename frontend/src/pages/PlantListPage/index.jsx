@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import NavBar from "../../shared-components/NavBar";
 import PlantItem from "./PlantItem";
 import LoadingSpinner from "../../shared-components/LoadingSpinner";
+import RedirectToPlantsIfSignedIn from "../../shared-components/RedirectToPlantsIfSignedIn";
 
 const PlantListPage = () => {
     const [plants, setPlants] = useState([]);

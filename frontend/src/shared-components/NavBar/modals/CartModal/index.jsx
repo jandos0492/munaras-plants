@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { RemoveScroll } from "react-remove-scroll";
+import { useSelector } from "react-redux";
 import SessionContext from "../../../../contexts/sessionContext";
 import LoadingSpinner from "../../../../shared-components/LoadingSpinner";
 import * as cartService from "../../../../services/cart";
@@ -10,11 +11,11 @@ import clsx from "clsx";
 const CartModal = ({ setCartOpen }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [items, setItems] = useState([]);
-    const { username } = useContext(SessionContext);
+    const username = useSelector((state) => state.session.user?.username);
 
     const fetchCart = useCallback(async () => {
         setIsLoading(true);
-        const response = await cartService.getCart();
+        const response = await fetch("http://localhost:3000/api/cart");
         setItems(await response.json());
         setIsLoading(false);
     }, []);

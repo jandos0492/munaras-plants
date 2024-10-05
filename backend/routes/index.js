@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const apiRouter = require("./api");
 const apiPlantsRoute = require("./api/plantsRouter");
+const apiCartRoute = require("./api/cartRouter");
 
 router.use("/api", apiRouter);
 router.use("/api", apiPlantsRoute);
+router.use("/api", apiCartRoute);
 
 // Static routes
 // Serve React build files in produciton
