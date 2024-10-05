@@ -1,11 +1,18 @@
 import { useContext } from "react";
 import { motion } from "framer-motion";
-import SessionContext from "../../../contexts/sessionContext";
+import { useDispatch, useSelector } from "react-redux";
+import * as sessionActions from "../../../store/session";
 
 
 const MobileMenuModal = ({ onCartOpenClick }) => {
 
-    const { username, signOut} = useContext(SessionContext);
+    const username = useSelector((state) => state.session.user?.username);
+    const dispatch = useDispatch();
+
+    const signOut = (e) => {
+        e.preventDefault();
+        dispatch(sessionActions.logout());
+    };
 
     return (
         <motion.div

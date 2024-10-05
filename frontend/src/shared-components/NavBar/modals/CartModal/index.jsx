@@ -40,6 +40,11 @@ const CartModal = ({ setCartOpen }) => {
         >
             <div className="bg-emerald-800 text-white font-playfair text-center text-3xl py-7 shadow-md">
                 <div>{username}'s Cart</div>
+                <button 
+                    onClick={() => setCartOpen(false)}
+                    className="fixed top-2 right-2 text-sm bg-emerald-700 w-6 h-6 rounded-full">
+                    <i className="fa-solid fa-x"></i>
+                </button>
             </div>
             {isLoading ? (
                 <LoadingSpinner />

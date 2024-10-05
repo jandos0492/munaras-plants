@@ -21,8 +21,6 @@ app.use(express.json());
 if (!isProduction) {
     // enable cors only in development
     app.use(cors({
-        // origin: 'http://localhost:3001', // URL вашего фронтенда
-        // credentials: true
     }));
 }
 

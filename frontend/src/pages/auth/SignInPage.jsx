@@ -5,12 +5,10 @@ import * as sessionActions from "../../store/session";
 import AuthForm from "./AuthForm";
 import FormContainer from "./AuthForm/FormContainer";
 import RedirectToPlantsIfSignedIn from "../../shared-components/RedirectToPlantsIfSignedIn";
-import SessionContext from "../../contexts/sessionContext";
 
 const SignInPage = () => {
     const [error, setError] = useState("");
     const location = useLocation();
-    const sessionContext = useContext(SessionContext);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -36,25 +34,6 @@ const SignInPage = () => {
                     ]}
                     submitButtonLabel="sign in"
                     onSubmit={async (values) => {
-                        // const response = await userService.createSession({
-                        //     username: values.username,
-                        //     password: values.password,
-                        // });
-
-                        // const data = await response.json();
-                        // sessionContext.signIn(data.capstone_session_token);
-                        // const response = await dispatch(sessionActions.login({
-                        //     username: values.username,
-                        //     password: values.password,
-                        // }));
-
-                        // const data = await response.json();
-                        // if (response.ok === 200) {
-                        //     setError("");
-                        // } else {
-                        //     setError(data.error);
-                        // }
-
                         try {
                             await dispatch(
                                 sessionActions.login({ username: values.username, password: values.password })
