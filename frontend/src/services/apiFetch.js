@@ -1,7 +1,7 @@
 const xsrfToken = document.cookie
-    .split("; ")
+    ?.split("; ")
     .find((row) => row.startsWith("XSRF-TOKEN="))
-    .split("=")[1];
+    ?.split("=")[1];
 
 const apiFetch = (method, path, body = null) => {
     const options = {

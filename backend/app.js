@@ -1,5 +1,5 @@
 const express = require("express");
-require("express-async-errors");
+// require("express-async-errors");
 const morgan = require("morgan");
 const cors = require("cors");
 const csurf = require("csurf");
@@ -21,6 +21,8 @@ app.use(express.json());
 if (!isProduction) {
     // enable cors only in development
     app.use(cors({
+        origin: 'http://localhost:3001', // URL вашего фронтенда
+        credentials: true
     }));
 }
 

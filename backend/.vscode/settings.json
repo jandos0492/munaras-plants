@@ -2,10 +2,10 @@
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#3399ff",
         "activityBar.background": "#3399ff",
-        "editorError.foreground": "#000000ff",
+        "editorError.foreground": "#f00707",
         "editorGroup.border": "#3399ff",
-        "editorInfo.foreground": "#000000ff",
-        "editorWarning.foreground": "#000000ff",
+        "editorInfo.foreground": "#dc0505",
+        "editorWarning.foreground": "#e40707",
         "panel.border": "#3399ff",
         "sash.hoverBorder": "#3399ff",
         "sideBar.border": "#3399ff",
