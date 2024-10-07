@@ -19,23 +19,23 @@ Here are some screnshots of the Munara's Plants Website:
 
 ### Sign In Page
 
-<img src="../frontend/public/images/screenshots/sign-in.jpg" alt="Sign In Page screenshot" width="300px">
+<img src="./frontend/public/images/screenshots/sign-in.jpg" alt="Sign In Page screenshot" width="300px">
 
 ### Sign Up Page
 
-<img src="../frontend/public/images/screenshots/sign-up.jpg" alt="Sign Up Page screenshots" width="300px">
+<img src="./frontend/public/images/screenshots/sign-up.jpg" alt="Sign Up Page screenshots" width="300px">
 
 ### Plants List Page
 
-<img src="../frontend/public/images/screenshots/plants-list.jpg" alt="Plants List Page screenshots" width="300px">
+<img src="./frontend/public/images/screenshots/plants-list.jpg" alt="Plants List Page screenshots" width="300px">
 
 ### Plant Info Page
 
-<img src="../frontend/public/images/screenshots/plants-info.jpg" alt="Plant Info Page screenshot" width="300px">
+<img src="./frontend/public/images/screenshots/plants-info.jpg" alt="Plant Info Page screenshot" width="300px">
 
 ### Cart Page
 
-<img src="../frontend/public/images/screenshots/cart.jpg" alt="Cart Page screenshot" width="300px">
+<img src="./frontend/public/images/screenshots/cart.jpg" alt="Cart Page screenshot" width="300px">
 
 <h2 id="features">Features</h2>
 
