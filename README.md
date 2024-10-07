@@ -1,6 +1,6 @@
 # Munara's Plants
 
-Welcome to the Munara's Plants project! This web application is an e-commerce project built on Shopify, offering a curated selection of plants for customers. Users can browse the collection, add their favorite plants to the cart, and seamlessly complete purchases, providing a convenient and enjoyable shopping experience for plant lovers.
+Welcome to the Munara's Plants project! This web application is an e-commerce project, offering a curated selection of plants for customers. Users can browse the collection, add their favorite plants to the cart, and seamlessly complete purchases, providing a convenient and enjoyable shopping experience for plant lovers.
 
 You can access the live project here: [Munara's Plants](https://munaras-plants.onrender.com)
 
