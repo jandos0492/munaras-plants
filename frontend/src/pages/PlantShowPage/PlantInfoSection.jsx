@@ -8,6 +8,7 @@ import "react-medium-image-zoom/dist/styles.css";
 
 const PlantInfoSection = ({ plant }) => {
     const [imageIdx, setImageIdx] = useState(() => getRandomIdx(plant.images));
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
 
     return (
         <div className="flex flex-col md:flex-row ">
@@ -15,15 +16,23 @@ const PlantInfoSection = ({ plant }) => {
                 <div className="block md:hidden mb-8">
                     <PlantHeading plant={plant} />
                 </div>
-                {plant.images && plant.images[0]?.src && (
-                    <Zoom>
+                {plant.images &&
+                    plant.images[0]?.src &&
+                    (isDesktop ? (
+                        <Zoom>
+                            <img
+                                className="rounded-md"
+                                src={plant.images[imageIdx].src}
+                                alt={plant.name}
+                            />
+                        </Zoom>
+                    ) : (
                         <img
                             className="rounded-md"
                             src={plant.images[imageIdx].src}
                             alt={plant.name}
                         />
-                    </Zoom>
-                )}
+                    ))}
                 <div className="flex mt-4">
                     <BenefitBox
                         icon="far fa-check-circle"

@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { RemoveScroll } from "react-remove-scroll";
 import { useSelector } from "react-redux";
 import LoadingSpinner from "../../../../shared-components/LoadingSpinner";
 import * as cartService from "../../../../services/cart";

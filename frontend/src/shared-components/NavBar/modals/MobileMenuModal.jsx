@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from "../../../store/session";
