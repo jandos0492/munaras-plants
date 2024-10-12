@@ -3,7 +3,7 @@ const router = express.Router();
 const apiRouter = require("./api");
 const apiPlantsRoute = require("./api/plantsRouter");
 const apiCartRoute = require("./api/cartRouter");
-const apiKeepAlive = require("./api/keepAliveRouter");
+const keepAliveRouter = require("./api/keepAliveRouter");
 
 router.use("/api", apiRouter);
 router.use("/api", apiPlantsRoute);
