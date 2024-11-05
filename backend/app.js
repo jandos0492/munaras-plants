@@ -1,11 +1,124 @@
+// const axios = require("axios");
+// const express = require("express");
+// // require("express-async-errors");
+// const morgan = require("morgan");
+// const cors = require("cors");
+// const csurf = require("csurf");
+// const helmet = require("helmet");
+// const cookieParser = require("cookie-parser");
+
+// const { environment } = require("./config");
+// const isProduction = environment === "production";
+// const { ValidationError } = require("sequelize");
+// const app = express();
+// const routes = require("./routes");
+
+// app.use(morgan("dev"));
+
+// app.use(cookieParser());
+// app.use(express.json());
+
+// // Security Middleware
+// if (!isProduction) {
+//     // enable cors only in development
+//     app.use(cors({
+//         origin: 'http://localhost:3001',
+//         credentials: true
+//     }));
+// }
+
+// // helmet helps set a variety of headers to better secure your app
+// app.use(
+//     helmet.crossOriginResourcePolicy({
+//         policy: "cross-origin",
+//     })
+// );
+
+// // Set the _csrf token and create req.csrfToken method
+// app.use(
+//     csurf({
+//         cookie: {
+//             secure: isProduction,
+//             sameSite: isProduction && "Lax",
+//             httpOnly: true,
+//         },
+//     })
+// );
+
+
+
+
+// app.use(routes); // Connect all the routes
+
+
+// // Catch unhandled requests and forward to error handler.
+// app.use((_req, _res, next) => {
+//     const err = new Error("The requested resource couldn't be found.");
+//     err.title = "Resource Not Found";
+//     err.errors = { message: "The requested resource couldn't be found." };
+//     err.status = 404;
+//     next(err);
+// });
+
+// // Process sequelize errors
+// app.use((err, _req, _res, next) => {
+//     // check if error is a Sequelize error:
+//     if (err instanceof ValidationError) {
+//         let errors = {};
+//         for (let error of err.errors) {
+//             errors[error.path] = error.message;
+//         }
+//         err.title = "Validation error";
+//         err.errors = errors;
+//     }
+//     next(err);
+// });
+
+// // Error formatter
+// app.use((err, _req, res, _next) => {
+//     res.status(err.status || 500);
+//     console.error(err);
+//     res.json({
+//         title: err.title || 'Server Error',
+//         message: err.message,
+//         errors: err.errors,
+//         stack: isProduction ? null : err.stack
+//     });
+// });
+
+// // Keep-Alive Function (Cyclic Task)
+// const cyclicFunc = async () => {
+//     while (true) {
+//         try {
+//             // Send request to your /api/keep-alive endpoint
+//             await axios.get('https://munaras-plants.onrender.com/api/alive');
+//             console.log('Keep-alive request made to the server');
+
+//             // Wait for 14 minutes (14 * 60 * 1000 milliseconds)
+//             await new Promise(resolve => setTimeout(resolve, 840000));
+
+//         } catch (error) {
+//             console.error('Error in cyclicFunc:', error);
+//             // Wait 1 minute before retrying in case of an error
+//             await new Promise(resolve => setTimeout(resolve, 60000));
+//         }
+//     }
+// };
+
+// // Start the cyclic function
+// cyclicFunc();
+
+
+// module.exports = app;
+
 const axios = require("axios");
 const express = require("express");
-// require("express-async-errors");
 const morgan = require("morgan");
 const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
+const schedule = require('node-schedule');
 
 const { environment } = require("./config");
 const isProduction = environment === "production";
@@ -14,27 +127,22 @@ const app = express();
 const routes = require("./routes");
 
 app.use(morgan("dev"));
-
 app.use(cookieParser());
 app.use(express.json());
 
-// Security Middleware
 if (!isProduction) {
-    // enable cors only in development
     app.use(cors({
-        origin: 'http://localhost:3001', // URL вашего фронтенда
+        origin: 'http://localhost:3001',
         credentials: true
     }));
 }
 
-// helmet helps set a variety of headers to better secure your app
 app.use(
     helmet.crossOriginResourcePolicy({
         policy: "cross-origin",
     })
 );
 
-// Set the _csrf token and create req.csrfToken method
 app.use(
     csurf({
         cookie: {
@@ -45,13 +153,8 @@ app.use(
     })
 );
 
+app.use(routes);
 
-
-
-app.use(routes); // Connect all the routes
-
-
-// Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
     const err = new Error("The requested resource couldn't be found.");
     err.title = "Resource Not Found";
@@ -60,9 +163,7 @@ app.use((_req, _res, next) => {
     next(err);
 });
 
-// Process sequelize errors
 app.use((err, _req, _res, next) => {
-    // check if error is a Sequelize error:
     if (err instanceof ValidationError) {
         let errors = {};
         for (let error of err.errors) {
@@ -74,7 +175,6 @@ app.use((err, _req, _res, next) => {
     next(err);
 });
 
-// Error formatter
 app.use((err, _req, res, _next) => {
     res.status(err.status || 500);
     console.error(err);
@@ -86,27 +186,17 @@ app.use((err, _req, res, _next) => {
     });
 });
 
-// Keep-Alive Function (Cyclic Task)
+// Cyclic Task: Runs every day from 10am to 2pm ET
 const cyclicFunc = async () => {
-    while (true) {
-        try {
-            // Send request to your /api/keep-alive endpoint
-            await axios.get('https://munaras-plants.onrender.com/api/alive');
-            console.log('Keep-alive request made to the server');
-
-            // Wait for 14 minutes (14 * 60 * 1000 milliseconds)
-            await new Promise(resolve => setTimeout(resolve, 840000));
-
-        } catch (error) {
-            console.error('Error in cyclicFunc:', error);
-            // Wait 1 minute before retrying in case of an error
-            await new Promise(resolve => setTimeout(resolve, 60000));
-        }
+    try {
+        await axios.get('https://munaras-plants.onrender.com/api/alive');
+        console.log('Keep-alive request made to the server');
+    } catch (error) {
+        console.error('Error in cyclicFunc:', error);
     }
 };
 
-// Start the cyclic function
-cyclicFunc();
-
+schedule.scheduleJob('*/14 10-13 * * *', cyclicFunc);
+schedule.scheduleJob('0-14 14 * * *', cyclicFunc);
 
 module.exports = app;
